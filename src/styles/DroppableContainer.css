@@ -1,0 +1,6 @@
+.droppableContainer {
+    width: 110px;
+    height: 110px;
+    border: 2px;
+    background-color: lightgrey;
+}
