@@ -1,31 +1,29 @@
 import * as React from 'react';
 import DroppableContainer from './DroppableContainer';
-import Position from './Position';
 import Tile from './Tile';
 
 const WIDTH = 5;
 const HEIGHT = 7;
 
 export interface IPageProps {
-    initialTiles: Map<Position, Tile>;
+    tiles: Map<number, Tile>;
 }
 
 interface IPageState {
     layout: JSX.Element[][];
-    currentTiles: Map<Position, Tile>;
 }
 
 class Page extends React.Component<IPageProps, IPageState> {
     constructor(props: IPageProps) {
         super(props);
 
-        this.state = { layout: [], currentTiles: this.props.initialTiles };
+        this.state = { layout: [] };
     }
 
     public render() {
         return (
             <div>
-                <ul style={{display: 'flex'}}>
+                <ul style={{display: 'flex', listStyleType: 'none'}}>
                     {this.state.layout.map((row) =>
                         <li key={row[0].key ? row[0].key : 0}>{row}</li>)}
                 </ul>
@@ -44,11 +42,10 @@ class Page extends React.Component<IPageProps, IPageState> {
             const row: JSX.Element[] = [];
 
             for (let y = 0; y < HEIGHT; y++) {
-                const grey: boolean = (y+x) % 2 === 0
-                const currentPosition: Position = new Position(x, y)
+                const grey: boolean = (y+x) % 2 === 0;
                 const i = y + x*HEIGHT;
+                const tile = this.props.tiles.get(i);
 
-                const tile = this.state.currentTiles.get(currentPosition);
                 if (tile) {
                     row.push(
                         <DroppableContainer grey={ grey } key={i}>
