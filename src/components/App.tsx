@@ -6,6 +6,7 @@ class App extends React.Component {
   public render() {
     const tiles: Map<number, Tile> = new Map();
     tiles.set(1, new Tile({color: 'blue', id: 'blue', initialPosition: 1}));
+    tiles.set(0, new Tile({color: 'red', id: 'red', initialPosition: 0}));
 
     return (
       <div className="App">

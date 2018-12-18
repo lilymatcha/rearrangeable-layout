@@ -46,7 +46,6 @@ class Page extends React.Component<IPageProps, IPageState> {
     }
 
     private handleTileClick(e: React.MouseEvent, clickedTileId: string) {
-        console.log('Clicked tile: ', clickedTileId);
         if (this.state.selectedTileKey === clickedTileId) {
             this.setState({selectedTileKey: undefined});
         } else {
@@ -55,20 +54,22 @@ class Page extends React.Component<IPageProps, IPageState> {
     }
 
     private handleContainerClick(e: React.MouseEvent, clickedContainerKey: number) {
-        console.log('Clicked container: ', clickedContainerKey);
-        console.log('Currently selected tile: ', this.state.selectedTileKey);
-        if (this.state.selectedTileKey) {
+        if (this.state.selectedTileKey !== undefined) {
             const selectedTileOldPosition = this.state.tilePositions.get(this.state.selectedTileKey);
-            console.log('Selected tile\'s old position: ', selectedTileOldPosition);
-            if (selectedTileOldPosition) {
+            if (selectedTileOldPosition !== undefined) {
                 this.moveTile(selectedTileOldPosition, clickedContainerKey);
             }
         }
     }
 
+    private tryMoveTile(attemptedPosition: number) {
+        return !this.state.currentTiles.has(attemptedPosition); // this is buggy but okay for now
+    }
+
     private moveTile(oldPosition: number, newPosition: number) {
         const tile = this.state.currentTiles.get(oldPosition);
-        if (tile && this.state.currentTiles.delete(oldPosition)) {
+
+        if (tile && this.tryMoveTile(newPosition) && this.state.currentTiles.delete(oldPosition)) {
             this.state.currentTiles.set(newPosition, tile);
             this.setState({selectedTileKey: undefined})
             this.updateTilePositionsMap();
