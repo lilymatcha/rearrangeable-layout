@@ -1,17 +1,33 @@
 import * as React from 'react';
 import './../styles/Tile.css';
+import Position from './Position';
 
 export interface ITileProps {
     color: string;
+    id: string;
+    initialPosition?: Position;
 }
 
-class Tile extends React.Component<ITileProps, object> {
+interface ITileState {
+    currentPosition: Position;
+}
+
+class Tile extends React.Component<ITileProps, ITileState> {
+    constructor(props: ITileProps) {
+        super(props);
+        this.state = { currentPosition: props.initialPosition || new Position(0,0) }
+    }
+
+    public updatePosition(currentPosition: Position) {
+        this.setState({ currentPosition });
+    }
+
     public render() {
         const backgroundColor: React.CSSProperties = { backgroundColor: this.props.color };
-        const dragAndDrop: boolean = true;
+        const draggable: boolean = true;
 
         return (
-            <button draggable={ dragAndDrop } className="tile" style={ backgroundColor } />
+            <button draggable={ draggable } className='tile' style={ backgroundColor } id={ this.props.id } />
         );
     }
 }

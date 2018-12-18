@@ -1,24 +1,21 @@
 import * as React from 'react';
 import './../styles/DroppableContainer.css';
+import { ITileProps } from './Tile';
 
-class DroppableContainer extends React.Component<React.Props<any>, object> {
+export interface IDroppableContainerProps {
+    key?: number;
+    grey?: boolean;
+    children?: React.ReactElement<ITileProps>;
+}
 
-    public onDragOver = (e: React.DragEvent) => {
-        e.preventDefault();
-    }
+function DroppableContainer({grey, children}: IDroppableContainerProps) {
+    const shouldFill: React.CSSProperties = grey ? { backgroundColor: 'lightgrey' } : { backgroundColor: 'white' };
 
-    public onDrop = (e: React.DragEvent) => {
-        e.stopPropagation();
-        console.log("tile dropped");
-    }
-
-    public render() {
-        return(
-            <div className="droppableContainer"
-            onDragOver={this.onDragOver}                    
-            onDrop={this.onDrop} />
-        );
-    }
+    return (
+        <div className='droppableContainer' style={ shouldFill }>
+            {children}
+        </div>
+    );
 }
 
 export default DroppableContainer;
