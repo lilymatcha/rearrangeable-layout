@@ -3,19 +3,28 @@ import './../styles/DroppableContainer.css';
 import { ITileProps } from './Tile';
 
 export interface IDroppableContainerProps {
-    key?: number;
     grey?: boolean;
+    key?: number;
     children?: React.ReactElement<ITileProps>;
+    onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-function DroppableContainer({grey, children}: IDroppableContainerProps) {
-    const shouldFill: React.CSSProperties = grey ? { backgroundColor: 'lightgrey' } : { backgroundColor: 'white' };
+class DroppableContainer extends React.Component<IDroppableContainerProps, object> {
+    constructor(props: IDroppableContainerProps) {
+        super(props);
+    }
 
-    return (
-        <div className='droppableContainer' style={ shouldFill }>
-            {children}
-        </div>
-    );
+    public render() {
+        const shouldFill: React.CSSProperties = this.props.grey ? { backgroundColor: 'lightgrey' } : { backgroundColor: 'white' };
+    
+        return (
+            <div className='droppableContainer'
+            style={ shouldFill }
+            onClick={this.props.onClick}>
+                {this.props.children}
+            </div>
+        );
+    }
 }
 
 export default DroppableContainer;

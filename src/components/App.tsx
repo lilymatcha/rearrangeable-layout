@@ -5,12 +5,11 @@ import Tile from './Tile';
 class App extends React.Component {
   public render() {
     const tiles: Map<number, Tile> = new Map();
-    tiles.set(0, new Tile({color: 'blue', id: 'blue'}));
-    tiles.set(8, new Tile({color: 'red', id: 'red'}));
+    tiles.set(1, new Tile({color: 'blue', id: 'blue', initialPosition: 1}));
 
     return (
       <div className="App">
-        <Page tiles={tiles} />
+        <Page initialTiles={tiles} />
       </div>
     );
   }
