@@ -1,11 +1,14 @@
 import * as React from 'react';
 import './../styles/Tile.css';
 
+import { Draggable, DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
+
 export interface ITileProps {
     color: string;
     id: string;
+    index: number;
     initialPosition: number;
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
     selected?: boolean;
 }
 
@@ -21,15 +24,25 @@ class Tile extends React.Component<ITileProps, ITileState> {
     }
 
     public render() {
-        const backgroundColor: React.CSSProperties = { backgroundColor: this.props.color };
-        const draggable: boolean = true;
+        const style: React.CSSProperties = {
+            backgroundColor: this.props.color
+        };
 
         return (
-            <button draggable={ draggable }
-            className='tile'
-            style={ backgroundColor }
-            id={ this.props.id }
-            onClick={this.props.onClick} />
+            <Draggable draggableId={this.props.id} index={this.props.index}>
+                {(providedDraggable: DraggableProvided, snapshotDraggable: DraggableStateSnapshot) => (
+                    <div
+                    className='tile'
+                    ref={providedDraggable.innerRef}
+                    {...providedDraggable.draggableProps}
+                    {...providedDraggable.dragHandleProps}
+                    style={ style }
+                    id={ this.props.id }
+                    onClick={this.props.onClick}>
+                        {providedDraggable.placeholder}
+                    </div>
+                )}
+            </Draggable>
         );
     }
 }
