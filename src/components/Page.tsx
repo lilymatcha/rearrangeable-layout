@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, Draggable, DraggableProvided, Droppable, DroppableProvided, DropResult } from 'react-beautiful-dnd';
 
 import './../styles/Page.css';
 import DroppableContainer from './DroppableContainer';
@@ -55,26 +55,14 @@ class Page extends React.Component<IPageProps, IPageState> {
             return;
         }
 
+        if (result.destination.droppableId === result.source.droppableId) {
+            return;
+        }
+
         console.log('Source: ', result.source, ', Destination: ', result.destination);
         this.moveTile(Number(result.source.droppableId), Number(result.destination.droppableId));
+        console.log('moveTile() finished.');
     }
-
-    // private handleTileClick(e: React.MouseEvent, clickedTileId: string) {
-    //     if (this.state.selectedTileKey === clickedTileId) {
-    //         this.setState({selectedTileKey: undefined});
-    //     } else {
-    //         this.setState({selectedTileKey: clickedTileId});
-    //     }
-    // }
-
-    // private handleContainerClick(e: React.MouseEvent, clickedContainerKey: number) {
-    //     if (this.state.selectedTileKey !== undefined) {
-    //         const selectedTileOldPosition = this.state.tilePositions.get(this.state.selectedTileKey);
-    //         if (selectedTileOldPosition !== undefined) {
-    //             this.moveTile(selectedTileOldPosition, clickedContainerKey);
-    //         }
-    //     }
-    // }
 
     private tryMoveTile(attemptedPosition: number) {
         return !this.state.currentTiles.has(attemptedPosition); // this is buggy but okay for now
@@ -106,23 +94,52 @@ class Page extends React.Component<IPageProps, IPageState> {
 
                 if (tile) {
                     row.push(
-                        <DroppableContainer
-                            key={i}
-                            position={i}
-                            grey={grey}>
-                            <Tile
-                                color={tile.props.color}
-                                id={tile.props.id}
-                                initialPosition={i}
-                                index={0} />
-                        </DroppableContainer>
+                        <Droppable droppableId={String(i)}>
+                            {(providedDroppable: DroppableProvided) => (
+                            <div ref={providedDroppable.innerRef}
+                            {...providedDroppable.droppableProps}>
+                                <DroppableContainer
+                                key={i}
+                                position={i}
+                                grey={grey}>
+                                    <Draggable draggableId={String(tile.props.id)} index={0}>
+                                        {(providedDraggable: DraggableProvided) => (
+                                            <div
+                                            ref={providedDraggable.innerRef}
+                                            {...providedDraggable.draggableProps}
+                                            {...providedDraggable.dragHandleProps}>
+                                                <Tile
+                                                color={tile.props.color}
+                                                id={tile.props.id}
+                                                initialPosition={i}
+                                                index={0} />
+                                                {providedDraggable.placeholder}
+                                            </div>
+                                        )}
+                                    </Draggable>
+                                </DroppableContainer>
+                                {providedDroppable.placeholder}
+                            </div>
+                        )}
+                        </Droppable>
                     );
                 } else {
                     row.push(
-                    <DroppableContainer
-                        key={i}
-                        position={i}
-                        grey={grey} />);
+                    <Droppable droppableId={String(i)}>
+                        {(providedDroppable: DroppableProvided) => (
+                            <div ref={providedDroppable.innerRef}
+                            {...providedDroppable.droppableProps}>
+                                <DroppableContainer
+                                key={i}
+                                position={i}
+                                grey={grey} />
+                                {providedDroppable.placeholder}
+                            </div>
+                        )}
+                        
+                    </Droppable>
+                    
+                    );
                 }
             }
             arr.push(row);
