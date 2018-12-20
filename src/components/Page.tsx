@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+
 import './../styles/Page.css';
 import DroppableContainer from './DroppableContainer';
 import Tile from './Tile';
@@ -22,6 +24,8 @@ class Page extends React.Component<IPageProps, IPageState> {
         super(props);
 
         const tilePositions: Map<string, number> = this.getTilePositions(this.props.initialTiles);
+        this.onDragEnd = this.onDragEnd.bind(this);
+
         this.state = {
             currentTiles: this.props.initialTiles,
             layout: [],
@@ -32,12 +36,12 @@ class Page extends React.Component<IPageProps, IPageState> {
 
     public render() {
         return (
-            <div>
+            <DragDropContext onDragEnd={this.onDragEnd}>
                 <ul className='page'>
                     {this.state.layout.map((row) =>
                         <li key={row[0].key ? row[0].key : 0}>{row}</li>)}
                 </ul>
-            </div>
+            </DragDropContext>
         );
     }
 
@@ -45,22 +49,32 @@ class Page extends React.Component<IPageProps, IPageState> {
         this.updateLayout();
     }
 
-    private handleTileClick(e: React.MouseEvent, clickedTileId: string) {
-        if (this.state.selectedTileKey === clickedTileId) {
-            this.setState({selectedTileKey: undefined});
-        } else {
-            this.setState({selectedTileKey: clickedTileId});
+    public onDragEnd(result: DropResult) {
+        if (!result.destination || result.destination.droppableId === '') {
+            console.log('There was no destination.');
+            return;
         }
+
+        console.log('Source: ', result.source, ', Destination: ', result.destination);
+        this.moveTile(Number(result.source.droppableId), Number(result.destination.droppableId));
     }
 
-    private handleContainerClick(e: React.MouseEvent, clickedContainerKey: number) {
-        if (this.state.selectedTileKey !== undefined) {
-            const selectedTileOldPosition = this.state.tilePositions.get(this.state.selectedTileKey);
-            if (selectedTileOldPosition !== undefined) {
-                this.moveTile(selectedTileOldPosition, clickedContainerKey);
-            }
-        }
-    }
+    // private handleTileClick(e: React.MouseEvent, clickedTileId: string) {
+    //     if (this.state.selectedTileKey === clickedTileId) {
+    //         this.setState({selectedTileKey: undefined});
+    //     } else {
+    //         this.setState({selectedTileKey: clickedTileId});
+    //     }
+    // }
+
+    // private handleContainerClick(e: React.MouseEvent, clickedContainerKey: number) {
+    //     if (this.state.selectedTileKey !== undefined) {
+    //         const selectedTileOldPosition = this.state.tilePositions.get(this.state.selectedTileKey);
+    //         if (selectedTileOldPosition !== undefined) {
+    //             this.moveTile(selectedTileOldPosition, clickedContainerKey);
+    //         }
+    //     }
+    // }
 
     private tryMoveTile(attemptedPosition: number) {
         return !this.state.currentTiles.has(attemptedPosition); // this is buggy but okay for now
@@ -68,6 +82,8 @@ class Page extends React.Component<IPageProps, IPageState> {
 
     private moveTile(oldPosition: number, newPosition: number) {
         const tile = this.state.currentTiles.get(oldPosition);
+
+        console.log('Old position: ', oldPosition, ', New Position: ', newPosition);
 
         if (tile && this.tryMoveTile(newPosition) && this.state.currentTiles.delete(oldPosition)) {
             this.state.currentTiles.set(newPosition, tile);
@@ -91,21 +107,22 @@ class Page extends React.Component<IPageProps, IPageState> {
                 if (tile) {
                     row.push(
                         <DroppableContainer
-                        grey={grey}
-                        key={i}
-                        onClick={(e) => this.handleContainerClick(e, i)}>
+                            key={i}
+                            position={i}
+                            grey={grey}>
                             <Tile
-                            color={tile.props.color}
-                            id={tile.props.id}
-                            initialPosition={i}
-                            onClick={(e) => this.handleTileClick(e, tile.props.id)} />
+                                color={tile.props.color}
+                                id={tile.props.id}
+                                initialPosition={i}
+                                index={0} />
                         </DroppableContainer>
                     );
                 } else {
-                    row.push(<DroppableContainer
-                        grey={grey}
+                    row.push(
+                    <DroppableContainer
                         key={i}
-                        onClick={(e) => this.handleContainerClick(e, i)} />);
+                        position={i}
+                        grey={grey} />);
                 }
             }
             arr.push(row);
