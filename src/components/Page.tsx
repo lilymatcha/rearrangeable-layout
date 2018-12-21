@@ -64,16 +64,17 @@ class Page extends React.Component<IPageProps, IPageState> {
         console.log('moveTile() finished.');
     }
 
-    private tryMoveTile(attemptedPosition: number) {
-        return !this.state.currentTiles.has(attemptedPosition); // this is buggy but okay for now
-    }
-
     private moveTile(oldPosition: number, newPosition: number) {
         const tile = this.state.currentTiles.get(oldPosition);
 
         console.log('Old position: ', oldPosition, ', New Position: ', newPosition);
 
-        if (tile && this.tryMoveTile(newPosition) && this.state.currentTiles.delete(oldPosition)) {
+        if (tile && this.state.currentTiles.delete(oldPosition)) {
+            const displacedTile = this.state.currentTiles.get(newPosition);
+            if (displacedTile)
+            {
+                this.state.currentTiles.set(newPosition + 1, displacedTile);
+            }
             this.state.currentTiles.set(newPosition, tile);
             this.setState({selectedTileKey: undefined})
             this.updateTilePositionsMap();
@@ -112,12 +113,10 @@ class Page extends React.Component<IPageProps, IPageState> {
                                                 id={tile.props.id}
                                                 initialPosition={i}
                                                 index={0} />
-                                                {providedDraggable.placeholder}
                                             </div>
                                         )}
                                     </Draggable>
                                 </DroppableContainer>
-                                {providedDroppable.placeholder}
                             </div>
                         )}
                         </Droppable>
@@ -132,7 +131,6 @@ class Page extends React.Component<IPageProps, IPageState> {
                                 key={i}
                                 position={i}
                                 grey={grey} />
-                                {providedDroppable.placeholder}
                             </div>
                         )}
                         
