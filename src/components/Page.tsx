@@ -37,10 +37,10 @@ class Page extends React.Component<IPageProps, IPageState> {
     public render() {
         return (
             <DragDropContext onDragEnd={this.onDragEnd}>
-                <ul className='page'>
-                    {this.state.layout.map((row) =>
-                        <li key={row[0].key ? row[0].key : 0}>{row}</li>)}
-                </ul>
+                <div className='page'>
+                    {this.state.layout.map((row, i) =>
+                        <div key={i}>{row}</div>)}
+                </div>
             </DragDropContext>
         );
     }
@@ -100,47 +100,49 @@ class Page extends React.Component<IPageProps, IPageState> {
 
                 if (tile) {
                     row.push(
-                        <Droppable droppableId={String(i)}>
-                            {(providedDroppable: DroppableProvided) => (
-                            <div ref={providedDroppable.innerRef}
-                            {...providedDroppable.droppableProps}>
-                                <DroppableContainer
-                                key={i}
-                                position={i}
-                                grey={grey}>
-                                    <Draggable draggableId={String(tile.props.id)} index={0}>
-                                        {(providedDraggable: DraggableProvided) => (
-                                            <div
-                                            ref={providedDraggable.innerRef}
-                                            {...providedDraggable.draggableProps}
-                                            {...providedDraggable.dragHandleProps}>
-                                                <Tile
-                                                id={tile.props.id}
-                                                initialPosition={i}
-                                                index={0} />
-                                            </div>
-                                        )}
-                                    </Draggable>
-                                </DroppableContainer>
-                            </div>
-                        )}
-                        </Droppable>
+                        <div key={i}>
+                            <Droppable droppableId={String(i)}>
+                                {(providedDroppable: DroppableProvided) => (
+                                <div ref={providedDroppable.innerRef}
+                                {...providedDroppable.droppableProps}>
+                                    <DroppableContainer
+                                    key={i}
+                                    position={i}
+                                    grey={grey}>
+                                        <Draggable draggableId={String(tile.props.id)} index={0}>
+                                            {(providedDraggable: DraggableProvided) => (
+                                                <div
+                                                ref={providedDraggable.innerRef}
+                                                {...providedDraggable.draggableProps}
+                                                {...providedDraggable.dragHandleProps}>
+                                                    <Tile
+                                                    id={tile.props.id}
+                                                    initialPosition={i}
+                                                    index={0} />
+                                                </div>
+                                            )}
+                                        </Draggable>
+                                    </DroppableContainer>
+                                </div>
+                            )}
+                            </Droppable>
+                        </div>
                     );
                 } else {
                     row.push(
-                    <Droppable droppableId={String(i)}>
-                        {(providedDroppable: DroppableProvided) => (
-                            <div ref={providedDroppable.innerRef}
-                            {...providedDroppable.droppableProps}>
-                                <DroppableContainer
-                                key={i}
-                                position={i}
-                                grey={grey} />
-                            </div>
-                        )}
-                        
-                    </Droppable>
-                    
+                        <div key={i}>
+                            <Droppable droppableId={String(i)}>
+                                {(providedDroppable: DroppableProvided) => (
+                                    <div ref={providedDroppable.innerRef}
+                                    {...providedDroppable.droppableProps}>
+                                        <DroppableContainer
+                                        key={i}
+                                        position={i}
+                                        grey={grey} />
+                                    </div>
+                                )}
+                            </Droppable>
+                        </div>
                     );
                 }
             }
