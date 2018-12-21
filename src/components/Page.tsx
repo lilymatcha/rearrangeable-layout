@@ -109,7 +109,6 @@ class Page extends React.Component<IPageProps, IPageState> {
                                             {...providedDraggable.draggableProps}
                                             {...providedDraggable.dragHandleProps}>
                                                 <Tile
-                                                color={tile.props.color}
                                                 id={tile.props.id}
                                                 initialPosition={i}
                                                 index={0} />

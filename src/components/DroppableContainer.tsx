@@ -14,12 +14,9 @@ class DroppableContainer extends React.Component<IDroppableContainerProps, objec
     }
 
     public render() {
-        const shouldFill: React.CSSProperties = this.props.grey ? { backgroundColor: 'lightgrey' } : { backgroundColor: 'white' };
-
         return (
             <div
-            className='droppableContainer'
-            style={ shouldFill }>
+            className={'droppableContainer' + (this.props.grey ? ' grey' : '')}>
                 {this.props.children}
             </div>
         );

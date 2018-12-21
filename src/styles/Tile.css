@@ -6,3 +6,11 @@
 .tile:hover {
     cursor: pointer;
 }
+
+#blue.tile {
+    background: #0060A0;
+}
+
+#red.tile {
+    background: #A03000;
+}

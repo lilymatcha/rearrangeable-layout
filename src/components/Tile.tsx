@@ -2,7 +2,6 @@ import * as React from 'react';
 import './../styles/Tile.css';
 
 export interface ITileProps {
-    color: string;
     id: string;
     index: number;
     initialPosition: number;
@@ -22,7 +21,6 @@ class Tile extends React.Component<ITileProps, ITileState> {
 
     public render() {
         const style: React.CSSProperties = {
-            backgroundColor: this.props.color
         };
 
         return (
