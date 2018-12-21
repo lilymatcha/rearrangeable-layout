@@ -73,7 +73,12 @@ class Page extends React.Component<IPageProps, IPageState> {
             const displacedTile = this.state.currentTiles.get(newPosition);
             if (displacedTile)
             {
-                this.state.currentTiles.set(newPosition + 1, displacedTile);
+                let displacedPosition = newPosition + 1;
+                if (displacedPosition === WIDTH * HEIGHT)
+                {
+                    displacedPosition = 0;
+                }
+                this.state.currentTiles.set(displacedPosition, displacedTile);
             }
             this.state.currentTiles.set(newPosition, tile);
             this.setState({selectedTileKey: undefined})
