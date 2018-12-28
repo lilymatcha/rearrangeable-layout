@@ -9,14 +9,15 @@ export interface ITileProps {
 }
 
 interface ITileState {
-    currentPosition: number;
+    containerId: number;
+    index: number;
 }
 
 class Tile extends React.Component<ITileProps, ITileState> {
     constructor(props: ITileProps) {
         super(props);
 
-        this.state = { currentPosition: props.initialPosition }
+        this.state = { containerId: props.initialPosition, index: props.index }
     }
 
     public render() {

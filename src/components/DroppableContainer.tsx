@@ -5,12 +5,19 @@ export interface IDroppableContainerProps {
     key: number;
     position: number;
     grey?: boolean;
-    children?: any;
+    children?: React.ReactChild;
 }
 
-class DroppableContainer extends React.Component<IDroppableContainerProps, object> {
+interface IDroppableContainerState {
+    children: any[];
+}
+
+class DroppableContainer extends React.Component<IDroppableContainerProps, IDroppableContainerState> {
     constructor(props: IDroppableContainerProps) {
         super(props);
+
+        const childrenAsArray: React.ReactChild[] = React.Children.toArray(props.children);
+        this.state = {children: childrenAsArray ? childrenAsArray : []}
     }
 
     public render() {

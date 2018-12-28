@@ -15,7 +15,6 @@ export interface IPageProps {
 interface IPageState {
     currentTiles: Map<number, Tile>;
     layout: JSX.Element[][];
-    selectedTileKey: string | undefined;
     tilePositions: Map<string, number>;
 }
 
@@ -29,7 +28,6 @@ class Page extends React.Component<IPageProps, IPageState> {
         this.state = {
             currentTiles: this.props.initialTiles,
             layout: [],
-            selectedTileKey: undefined,
             tilePositions
         };
     }
@@ -64,24 +62,24 @@ class Page extends React.Component<IPageProps, IPageState> {
         console.log('moveTile() finished.');
     }
 
+    // private reorderContainer(container: DroppableContainer, startIndex: number, endIndex: number) {
+    //     const result = [...container.state.children];
+
+    //     const [removed] = result.splice(startIndex, 1);
+    //     result.splice(endIndex, 0, removed);
+        
+    //     container.setState({children: result});
+    // }
+
+    // private newMoveTile(source: DroppableContainer)
+
     private moveTile(oldPosition: number, newPosition: number) {
         const tile = this.state.currentTiles.get(oldPosition);
 
         console.log('Old position: ', oldPosition, ', New Position: ', newPosition);
 
         if (tile && this.state.currentTiles.delete(oldPosition)) {
-            const displacedTile = this.state.currentTiles.get(newPosition);
-            if (displacedTile)
-            {
-                let displacedPosition = newPosition + 1;
-                if (displacedPosition === WIDTH * HEIGHT)
-                {
-                    displacedPosition = 0;
-                }
-                this.state.currentTiles.set(displacedPosition, displacedTile);
-            }
             this.state.currentTiles.set(newPosition, tile);
-            this.setState({selectedTileKey: undefined})
             this.updateTilePositionsMap();
             this.updateLayout();
         }   
