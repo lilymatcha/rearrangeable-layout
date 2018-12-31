@@ -1,0 +1,7 @@
+.droppableRow {
+    min-height: 100px;
+    min-width: 300px;
+    display: flex;
+    flex-direction: row;
+    background-color: lightgray;
+} 
