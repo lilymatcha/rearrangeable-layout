@@ -14,8 +14,8 @@ import {
     DroppableStateSnapshot,
     DropResult } from 'react-beautiful-dnd';
 
-export const ROW1 = 'row1';
-export const ROW2 = 'row2';
+export const ROW1 = '1';
+export const ROW2 = '2';
 
 // key is what row they start out in, value is the item itself
 export interface IHorizontalPageProps {
