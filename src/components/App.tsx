@@ -26,9 +26,13 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <Page initialTiles={tiles} />
-
+        <p style={{maxWidth: '600px'}}>The below example demonstrates drag-and-drop. The biggest problem is that while touch works in Chrome, it doesn't work in Edge; meanwhile, narrator works in Edge but doesn't work in Chrome. This is due to the fact that the API I'm using makes use of Touch events and Mouse events instead of Pointer events, which encapsulates both and is what Edge uses. For this reason, I'm trying to patch the API to respond to Pointer events in addition to the existing events, which hopefully will allow us to test the feasibility of touch narration accessibility.</p>
         <HorizontalPage initialItems={items} />
+        
+        <div style={{height: '50px'}} />
+
+        <p style={{maxWidth: '600px'}}>The below example was my initial attempt at getting an interface to work. It's not really what we're looking for, but it demonstrates how to deal with the edge case of moving a displaced tile to another area of the grid (in this case, the lower right corner to the upper left corner) when another tile is moved in its place.</p>
+        <Page initialTiles={tiles} />
       </div>
     );
   }
