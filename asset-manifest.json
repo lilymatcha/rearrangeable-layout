@@ -1,6 +1,13 @@
 {
-  "main.css": "static/css/main.dbe4912f.css",
-  "main.css.map": "static/css/main.dbe4912f.css.map",
-  "main.js": "static/js/main.b5227d52.js",
-  "main.js.map": "static/js/main.b5227d52.js.map"
+  "main.css": "/rearrangeable-layout/static/css/main.aa7c5cd9.chunk.css",
+  "main.js": "/rearrangeable-layout/static/js/main.f94742f5.chunk.js",
+  "main.js.map": "/rearrangeable-layout/static/js/main.f94742f5.chunk.js.map",
+  "static/js/1.c59be5fc.chunk.js": "/rearrangeable-layout/static/js/1.c59be5fc.chunk.js",
+  "static/js/1.c59be5fc.chunk.js.map": "/rearrangeable-layout/static/js/1.c59be5fc.chunk.js.map",
+  "runtime~main.js": "/rearrangeable-layout/static/js/runtime~main.dcc36125.js",
+  "runtime~main.js.map": "/rearrangeable-layout/static/js/runtime~main.dcc36125.js.map",
+  "static/css/main.aa7c5cd9.chunk.css.map": "/rearrangeable-layout/static/css/main.aa7c5cd9.chunk.css.map",
+  "index.html": "/rearrangeable-layout/index.html",
+  "precache-manifest.21a811dc322b5ceca44b4d3412354ce9.js": "/rearrangeable-layout/precache-manifest.21a811dc322b5ceca44b4d3412354ce9.js",
+  "service-worker.js": "/rearrangeable-layout/service-worker.js"
 }
