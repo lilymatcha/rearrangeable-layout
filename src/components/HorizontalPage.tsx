@@ -55,12 +55,12 @@ class HorizontalPage extends React.Component<IHorizontalPageProps, IHorizontalPa
     }
 
     public render() {
-        const horizontalStyling: React.CSSProperties = { display: 'flex', flexDirection: 'column' };
+        const horizontalStyling: React.CSSProperties = { display: 'flex', flexDirection: 'column', touchAction: 'none' };
 
         return(
             <DragDropContext onDragEnd={this.onDragEnd}>
                 <div style={horizontalStyling}>
-                    <Droppable droppableId={ROW1} direction='horizontal'>
+                    <Droppable droppableId={ROW1} direction='horizontal' isCombineEnabled={true}>
                         {(providedDroppable: DroppableProvided, snapshotDroppable: DroppableStateSnapshot) => (
                             <div 
                             ref={providedDroppable.innerRef}
@@ -84,7 +84,7 @@ class HorizontalPage extends React.Component<IHorizontalPageProps, IHorizontalPa
                             </div>
                         )}
                     </Droppable>
-                    <Droppable droppableId={ROW2} direction='horizontal'>
+                    <Droppable droppableId={ROW2} direction='horizontal' isCombineEnabled={true}>
                         {(providedDroppable: DroppableProvided, snapshotDroppable: DroppableStateSnapshot) => (
                             <div 
                             ref={providedDroppable.innerRef}

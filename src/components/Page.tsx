@@ -6,7 +6,7 @@ import DroppableContainer from './DroppableContainer';
 import Tile from './Tile';
 
 export const WIDTH = 3;
-export const HEIGHT = 5;
+export const HEIGHT = 3;
 
 export interface IPageProps {
     initialTiles: Map<number, Tile>;
@@ -37,7 +37,7 @@ class Page extends React.Component<IPageProps, IPageState> {
     public render() {
         return (
             <DragDropContext onDragEnd={this.onDragEnd}>
-                <div className='page'>
+                <div className='page' style={{touchAction: 'none'}}>
                     {this.state.layout.map((row, i) =>
                         <div key={i}>{row}</div>)}
                 </div>
