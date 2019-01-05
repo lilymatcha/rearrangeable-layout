@@ -2,4 +2,11 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  height: 100%;
+  overflow: auto;
+}
+
+html {
+  overflow: hidden;
+  height: 100%;
 }
