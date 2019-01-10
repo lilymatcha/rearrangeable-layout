@@ -15,7 +15,7 @@ importScripts("/rearrangeable-layout/workbox-v3.6.3/workbox-sw.js");
 workbox.setConfig({modulePathPrefix: "/rearrangeable-layout/workbox-v3.6.3"});
 
 importScripts(
-  "/rearrangeable-layout/precache-manifest.21a811dc322b5ceca44b4d3412354ce9.js"
+  "/rearrangeable-layout/precache-manifest.2e0307b34a2a77d1791c5f9922303e5d.js"
 );
 
 workbox.clientsClaim();
